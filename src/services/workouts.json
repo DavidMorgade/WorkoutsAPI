@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "date": "2019-01-01",
+        "muscleGroup": "Chest",
+        "mood": "bien",
+        "duration": 60,
+        "comment": "hoy me senti muy bien"
+    },
+    {
+        "id": 2,
+        "date": "2019-01-02",
+        "muscleGroup": "Back",
+        "mood": "mal",
+        "duration": 40,
+        "comment": "hoy me senti muy mal"
+    },
+    {
+        "id": 3,
+        "date": "2019-01-03",
+        "muscleGroup": "Legs",
+        "mood": "bien",
+        "duration": 20,
+        "comment": "hoy me senti muy bien"
+    },
+    {
+        "id": 4,
+        "date": "2019-01-04",
+        "muscleGroup": "Shoulders",
+        "mood": "bien",
+        "duration": 10,
+        "comment": "hoy me senti muy bien"
+    }
+
+]
