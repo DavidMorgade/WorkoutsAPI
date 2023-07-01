@@ -21,9 +21,9 @@ class Server implements IServer {
             workouts: '/api/workouts'
         };
         this.port = process.env.PORT || '3000';
-        this.routes();
         this.connectDB();
         this.middlewares();
+        this.routes();
     }
     // routes for express app
     routes() {

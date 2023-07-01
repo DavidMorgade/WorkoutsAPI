@@ -12,4 +12,7 @@ export interface IServer {
 
     readonly connectDB: () => void;
     readonly routes: () => void;
+    readonly middlewares: () => void;
+    readonly listen: () => void;
+
 }

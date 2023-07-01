@@ -1,6 +1,6 @@
 import express from 'express';
 import * as workoutService from '../services/workoutService'
-import toNewWorkoutEntry from '../utils/workoutUtils';
+import toNewWorkoutEntry from '../middlewares/workoutUtils';
 
 
 const router = express.Router();
