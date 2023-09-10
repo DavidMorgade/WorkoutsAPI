@@ -4,6 +4,7 @@ import { IPaths, IServer } from '../types/global';
 // Routers
 import workoutsRouter from '../routes/workouts';
 import usersRouter from '../routes/users';
+import authRouter from '../routes/auth';
 // database
 import dbConnection from '../db/config';
 // middlewares
@@ -18,7 +19,8 @@ class Server implements IServer {
         this.app = express();
         this.paths = {
             users: '/api/users',
-            workouts: '/api/workouts'
+            workouts: '/api/workouts',
+            auth: '/api/auth'
         };
         this.port = process.env.PORT || '3000';
         this.connectDB();
@@ -36,6 +38,8 @@ class Server implements IServer {
         this.app.use(this.paths.workouts, workoutsRouter);
         // users route
         this.app.use(this.paths.users, usersRouter);
+        // auth route
+        this.app.use(this.paths.auth, authRouter);
     };
     // start the express server and listen on dotenv port
     listen() {

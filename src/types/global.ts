@@ -3,6 +3,7 @@ type apiPath = `/api/${string}`;
 export interface IPaths {
     users: apiPath;
     workouts: apiPath;
+    auth: apiPath;
 }
 export interface IServer {
     readonly app: Express.Application;
