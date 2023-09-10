@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/user";
 
 import bcrypt from 'bcryptjs';
+import generateJWT from "../helpers/generateJWT";
 
 
 export const login = async (req: Request, res: Response) => {
@@ -28,11 +29,13 @@ export const login = async (req: Request, res: Response) => {
             })
         }
         // generate JWT
+        const token = await generateJWT(user.id);
+
 
         return res.json({
             message: "Login API - Controller",
-            email,
-            password
+            user,
+            token
         });
     } catch (error) {
         console.log(error);
