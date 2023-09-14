@@ -54,17 +54,13 @@ export const postUsers = async (req: Request, res: Response) => {
 export const deleteUsers = async (req: Request, res: Response) => {
     const {id} = req.params;
 
-
-
     // delete user from database
     const user = await User.findByIdAndUpdate(id, {status: false});
-    const authUser = req.user;
 
-    return res.json({
+
+    return res.json(
         user,
-        authUser,
-        //userAuth
-    });
+        );
 }
 
 export const patchUsers = (_req: Request, res: Response) => {

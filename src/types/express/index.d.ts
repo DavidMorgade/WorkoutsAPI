@@ -4,12 +4,12 @@ import { IUserEntry } from "../userTypes";
 declare global{
     namespace Express {
         interface Request {
-            uid?: Record<string,any> 
-            user?: IUserEntry  
+            user: IUserEntry
  
               
         }
         interface Response {
+            user: IUserEntry
         }
     }
 }

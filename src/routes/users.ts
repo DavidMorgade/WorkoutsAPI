@@ -6,6 +6,7 @@ import { check } from 'express-validator';
 // middlewares
 import { validateFields } from '../middlewares/validateFields';
 import validateJWT from '../middlewares/validateJWT';
+import isAdminRole from '../middlewares/validateRoles';
 // custom validation of role
 import { validateEmail, validateRole, validateUserId } from '../helpers/dbValidators';
 
@@ -37,6 +38,7 @@ router.post("/", [
 
 router.delete("/:id", [
     validateJWT,
+    isAdminRole,
     check("id", "Id is not valid").isMongoId(),
     check("id").custom( validateUserId ),
     validateFields 
