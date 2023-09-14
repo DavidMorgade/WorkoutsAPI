@@ -6,4 +6,5 @@ export interface IUserEntry {
     role: string;
     status: boolean;
     google: boolean;
+    uid: string;
 }

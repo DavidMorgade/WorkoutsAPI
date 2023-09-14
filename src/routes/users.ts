@@ -3,7 +3,9 @@ import express from 'express';
 import { deleteUsers, getUsers, patchUsers, postUsers, putUsers } from '../controllers/users';
 // express validator
 import { check } from 'express-validator';
+// middlewares
 import { validateFields } from '../middlewares/validateFields';
+import validateJWT from '../middlewares/validateJWT';
 // custom validation of role
 import { validateEmail, validateRole, validateUserId } from '../helpers/dbValidators';
 
@@ -34,6 +36,7 @@ router.post("/", [
 ],  postUsers);
 
 router.delete("/:id", [
+    validateJWT,
     check("id", "Id is not valid").isMongoId(),
     check("id").custom( validateUserId ),
     validateFields 

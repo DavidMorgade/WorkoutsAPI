@@ -35,8 +35,10 @@ const userSchema = new Schema<IUserEntry>({
 });
 
 // remove __v and password from the response
+// get _id as uid and return with user
 userSchema.methods.toJSON = function() {
-    const { __v, password, ...user } = this.toObject();
+    const { __v, password, _id, ...user } = this.toObject();
+    user.uid = _id;
     return user;
 }
 
