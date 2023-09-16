@@ -5,8 +5,7 @@ declare global{
     namespace Express {
         interface Request {
             user: IUserEntry
- 
-              
+            id_token: string
         }
         interface Response {
             user: IUserEntry

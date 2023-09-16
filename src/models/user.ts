@@ -22,7 +22,8 @@ const userSchema = new Schema<IUserEntry>({
     role: {
         type: String,
         required: [true, 'Role is required'],
-        enum: [Role.ADMIN_ROLE, Role.USER_ROLE, Role.PREMIUM_ROLE]
+        enum: [Role.ADMIN_ROLE, Role.USER_ROLE, Role.PREMIUM_ROLE],
+        default: Role.USER_ROLE
     },
     status: {
         type: Boolean,

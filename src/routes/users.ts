@@ -4,11 +4,9 @@ import { deleteUsers, getUsers, patchUsers, postUsers, putUsers } from '../contr
 // express validator
 import { check } from 'express-validator';
 // middlewares
-import { validateFields } from '../middlewares/validateFields';
-import validateJWT from '../middlewares/validateJWT';
+import { validateFields, validateJWT, hasRole, isAdminRole } from '../middlewares';
 // custom validation of role
 import { validateEmail, validateRole, validateUserId } from '../helpers/dbValidators';
-import { hasRole } from '../middlewares/validateRoles';
 //Role Enum
 import { Role } from '../types/userEnums';
 
@@ -41,6 +39,7 @@ router.post("/", [
 router.delete("/:id", [
     validateJWT,
     hasRole(Role.ADMIN_ROLE, Role.PREMIUM_ROLE, Role.USER_ROLE),
+    isAdminRole,
     check("id", "Id is not valid").isMongoId(),
     check("id").custom( validateUserId ),
     validateFields 
