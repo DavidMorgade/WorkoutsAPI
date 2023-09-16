@@ -1,16 +1,22 @@
 import { Request, Response, NextFunction } from "express";
 import { Role } from "../types/userEnums";
+import { RoleType } from "../types/userTypes";
 
-
-
-const isAdminRole = (req: Request, res: Response, next: NextFunction) => {
-
-    // check if the request already has the user - Frontend alarm
+ // check if the request already has the user - Frontend alarm
+const requestValidator = (req: Request, res: Response) : Response | void => {
     if(!req.user) {
         return res.status(500).json({
             msg: "Verifying role before token validation"
         })
-    }
+    };
+}
+
+
+const isAdminRole = (req: Request, res: Response, next: NextFunction) => {
+
+   
+    requestValidator(req, res);
+
     const {role, name} = req.user;
     // Check if role is not admin with Enum
     if(role !== Role.ADMIN_ROLE) {
@@ -21,6 +27,22 @@ const isAdminRole = (req: Request, res: Response, next: NextFunction) => {
 
     return next();
 }
+const hasRole = (...roles: RoleType[]) => {
 
+    
+    return (req: Request, res: Response, next: NextFunction) => {
+        requestValidator(req, res);
+    
+        const userRol = req.user.role;
+        if(!roles.includes(userRol)) {
+            return res.status(401).json({
+                msg: `The service needs one of this Rols ${roles}`
+            })
+        }
 
-export default isAdminRole;
+        return next();
+    }
+
+}
+
+export {isAdminRole, hasRole};

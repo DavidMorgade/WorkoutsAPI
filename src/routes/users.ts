@@ -6,9 +6,11 @@ import { check } from 'express-validator';
 // middlewares
 import { validateFields } from '../middlewares/validateFields';
 import validateJWT from '../middlewares/validateJWT';
-import isAdminRole from '../middlewares/validateRoles';
 // custom validation of role
 import { validateEmail, validateRole, validateUserId } from '../helpers/dbValidators';
+import { hasRole } from '../middlewares/validateRoles';
+//Role Enum
+import { Role } from '../types/userEnums';
 
 
 const router = express.Router();
@@ -38,7 +40,7 @@ router.post("/", [
 
 router.delete("/:id", [
     validateJWT,
-    isAdminRole,
+    hasRole(Role.ADMIN_ROLE, Role.PREMIUM_ROLE, Role.USER_ROLE),
     check("id", "Id is not valid").isMongoId(),
     check("id").custom( validateUserId ),
     validateFields 
