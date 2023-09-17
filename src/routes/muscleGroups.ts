@@ -1,5 +1,8 @@
 import { Response } from 'express';
 import express from 'express';
+import { isAdminRole, validateFields, validateJWT } from '../middlewares';
+import { check } from 'express-validator';
+import { createMuscleGroup } from '../controllers/muscleGroups';
 
 
 
@@ -19,11 +22,12 @@ router.get("/:id", (_, res: Response) => {
     });
 });
 // Create new MuscleGroup - private - only admin
-router.post("/", (_, res: Response) => {
-    res.json({
-        msg: "POST - ONLY ADMIN"
-    });
-});
+router.post("/", [
+    validateJWT,
+    check("name", "The name is required").not().isEmpty(),
+    validateFields,
+    isAdminRole
+], createMuscleGroup);
 // Update MuscleGroup - private - only admin
 router.put("/:id", (_, res: Response) => {
     res.json({
