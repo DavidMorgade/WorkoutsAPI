@@ -1,8 +1,10 @@
-import { Response } from 'express';
 import express from 'express';
-import { isAdminRole, validateFields, validateJWT } from '../middlewares';
+// middlewares
+import { hasMuscleGroup, isAdminRole, validateFields, validateJWT } from '../middlewares';
+// express validator
 import { check } from 'express-validator';
-import { createMuscleGroup } from '../controllers/muscleGroups';
+// Controlers
+import { createMuscleGroup, deleteMuscleGroup, getMuscleGroup, getMuscleGroups, putMuscleGroup } from '../controllers/muscleGroups';
 
 
 
@@ -10,17 +12,14 @@ const router = express.Router();
 
 
 // Optain all Muscle group - public
-router.get("/", (_, res: Response) => {
-    res.json({
-        msg: "GET"
-    });
-});
+router.get("/",getMuscleGroups);
 // Get only one MuscleGroup with id - public
-router.get("/:id", (_, res: Response) => {
-    res.json({
-        msg: "GET - id"
-    });
-});
+router.get("/:id",  [
+    check("id").custom(hasMuscleGroup),
+    check("id", "is not a valid Id")
+    .isMongoId(),
+    validateFields
+], getMuscleGroup);
 // Create new MuscleGroup - private - only admin
 router.post("/", [
     validateJWT,
@@ -29,17 +28,12 @@ router.post("/", [
     isAdminRole
 ], createMuscleGroup);
 // Update MuscleGroup - private - only admin
-router.put("/:id", (_, res: Response) => {
-    res.json({
-        msg: "PUT"
-    });
-});
+router.put("/:id", [
+    check("id", "Id is not valid").isMongoId(),
+    validateFields
+],putMuscleGroup);
 // Delete MuscleGroup - only admin
-router.delete("/:id", (_, res: Response) => {
-    res.json({
-        msg: "Delete"
-    });
-});
+router.delete("/:id", deleteMuscleGroup);
 
 export default router;
 
