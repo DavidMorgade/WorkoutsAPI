@@ -2,7 +2,7 @@ import express from 'express';
 //Types
 import { IPaths, IServer } from '../types/global';
 // Routers
-import workoutsRouter from '../routes/workouts';
+import muscleGroupsRouter from "../routes/muscleGroups"
 import usersRouter from '../routes/users';
 import authRouter from '../routes/auth';
 // database
@@ -19,6 +19,7 @@ class Server implements IServer {
         this.app = express();
         this.paths = {
             users: '/api/users',
+            muscleGroups: "/api/muscleGroups",
             workouts: '/api/workouts',
             auth: '/api/auth'
         };
@@ -34,8 +35,8 @@ class Server implements IServer {
             console.log('someone pinged here' + " " + new Date().toLocaleDateString());
             res.send('pong');
         });
-        // workouts route
-        this.app.use(this.paths.workouts, workoutsRouter);
+        // Muscle groups route
+        this.app.use(this.paths.muscleGroups, muscleGroupsRouter);
         // users route
         this.app.use(this.paths.users, usersRouter);
         // auth route

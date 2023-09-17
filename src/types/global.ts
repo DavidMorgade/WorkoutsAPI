@@ -2,6 +2,7 @@ type apiPath = `/api/${string}`;
 
 export interface IPaths {
     users: apiPath;
+    muscleGroups: apiPath,
     workouts: apiPath;
     auth: apiPath;
 }
