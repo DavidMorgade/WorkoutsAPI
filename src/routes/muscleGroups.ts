@@ -1,6 +1,6 @@
 import express from 'express';
 // middlewares
-import { hasMuscleGroup, isAdminRole, validateFields, validateJWT } from '../middlewares';
+import {  isAdminRole, validateFields, validateJWT } from '../middlewares';
 // express validator
 import { check } from 'express-validator';
 // Controlers
@@ -15,7 +15,7 @@ const router = express.Router();
 router.get("/",getMuscleGroups);
 // Get only one MuscleGroup with id - public
 router.get("/:id",  [
-    check("id").custom(hasMuscleGroup),
+    // check("id").custom(), TODO
     check("id", "is not a valid Id")
     .isMongoId(),
     validateFields

@@ -20,7 +20,7 @@ const getMuscleGroups = async (req: Request, res: Response) => {
             .where({status: true}),
             MuscleGroup
             .find({status: true})
-            .populate("user")
+            .populate("user", "name")
         ]);
 
     return res.json({

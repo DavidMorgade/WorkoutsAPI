@@ -17,6 +17,9 @@ const MuscleGroupSchema = new Schema({
     }
 });
 
-
+MuscleGroupSchema.methods.toJSON = function() {
+    const {__v, status, ...data} = this.toObject();
+    return data;
+}
 
 export default model('MuscleGroup', MuscleGroupSchema);
