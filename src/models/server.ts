@@ -5,6 +5,7 @@ import { IPaths, IServer } from '../types/global';
 import muscleGroupsRouter from "../routes/muscleGroups"
 import usersRouter from '../routes/users';
 import authRouter from '../routes/auth';
+import workoutsRouter from '../routes/workout';
 // database
 import dbConnection from '../db/config';
 // middlewares
@@ -35,6 +36,8 @@ class Server implements IServer {
             console.log('someone pinged here' + " " + new Date().toLocaleDateString());
             res.send('pong');
         });
+        // workout route
+        this.app.use(this.paths.workouts, workoutsRouter);
         // Muscle groups route
         this.app.use(this.paths.muscleGroups, muscleGroupsRouter);
         // users route
