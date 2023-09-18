@@ -32,15 +32,18 @@ const getMuscleGroups = async (req: Request, res: Response) => {
 const getMuscleGroup = async (req: Request, res: Response) => {
     const {id} = req.params;
 
-    const muscleGroup = await MuscleGroup.findById(id).populate("user");
+    const muscleGroup = await MuscleGroup.findById(id).populate("user", "name");
     return res.status(202).json(muscleGroup)
 }
 // Update muscleGroup
 const putMuscleGroup =async (req: Request, res: Response) => {
     const { id } = req.params;
-    const {_id, ...rest} = req.body;
+    const {status, user, ...data} = req.body;
 
-    const muscleGroup = await MuscleGroup.findByIdAndUpdate(id, rest);
+    data.name = data.name.toUpperCase();
+    data.user = req.user._id;
+
+    const muscleGroup = await MuscleGroup.findByIdAndUpdate(id, data, {new: true});
 
     return res.json(muscleGroup);
 }
@@ -72,10 +75,10 @@ const deleteMuscleGroup = async (req: Request, res: Response) => {
     const {id} = req.params;
 
     // disables muscleGroup from database
-    const muscleGroup = await MuscleGroup.findByIdAndUpdate(id, {status: false});
+    const muscleGroup = await MuscleGroup.findByIdAndUpdate(id, {status: false}, {new: true});
 
 
-    return res.json(
+    return res.status(200).json(
         muscleGroup,
         );
 }
