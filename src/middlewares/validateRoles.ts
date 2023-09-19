@@ -3,7 +3,7 @@ import { Role } from "../types/userEnums";
 import { RoleType } from "../types/userTypes";
 
  // check if the request already has the user - Frontend alarm
-const requestValidator = (req: Request, res: Response) : Response | void => {
+export const requestValidator = (req: Request, res: Response) : Response | void => {
     if(!req.user) {
         return res.status(500).json({
             msg: "Verifying role before token validation"

@@ -4,10 +4,10 @@ import { User, Workout } from "../models";
 
 export const postWorkout = async (req: Request, res: Response) => {
     const workoutName = req.body.workoutName.toUpperCase();
-    const {time, mood, comment, shared} = req.body;
+    const {time, mood, comment, shared, muscleGroups} = req.body;
     const user = await User.findById(req.user._id);
     const name = user?.name;
-    const workout = new Workout({workoutName, time, mood, comment, shared, user});
+    const workout = new Workout({workoutName, muscleGroups, time, mood, comment, shared, user});
     
 
     // save user in database
@@ -17,7 +17,7 @@ export const postWorkout = async (req: Request, res: Response) => {
         message: "Post API - Controller",
         workoutName,
         name,
-        muscleGroup: req.body.muscleGroup,
+        muscleGroups,
         time,
         comment,
     });

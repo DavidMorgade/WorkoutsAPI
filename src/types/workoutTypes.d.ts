@@ -9,7 +9,19 @@ export interface WorkoutEntry {
     duration: number;
     comment: string;
 }
+// Full WorkoutEntry
+export interface MuscleGroupEntry {
+    id: number;
+    name: string;
+    date: string;
+    muscleGroup: WorkoutEntry;
+    mood: Mood;
+    duration: number;
+    comment: string;
+}
 // WorkoutEntry without the comment field
 export type NoCommentWorkoutEntry = Omit<WorkoutEntry, "comment">;
 // WorkoutEntry without the id field
 export type NewWorkoutEntry = Omit<WorkoutEntry, "id">;
+
+export type muscleGroup = string[];
