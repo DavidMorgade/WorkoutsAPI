@@ -4,7 +4,6 @@ const WorkOutSchema = new Schema({
     name: {
         type: String,
         required: [true, 'Name is required'],
-        unique: true
     },
     status: {
         type: Boolean,
@@ -35,7 +34,6 @@ const WorkOutSchema = new Schema({
     muscleGroup: {
         type: Schema.Types.ObjectId,
         ref: "MuscleGroup",
-        required: true
     }
 });
 

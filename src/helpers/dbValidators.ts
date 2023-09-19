@@ -1,4 +1,4 @@
-import {Role, User, MuscleGroup} from "../models";
+import {Role, User, MuscleGroup, Workout} from "../models";
 
 /**
  * 
@@ -47,6 +47,14 @@ export const validateUserId = async (id: string) => {
 export const validateMuscleGroupId = async (id: string) => {
     const muscleGroupExists = await MuscleGroup.findById(id);
     if(!muscleGroupExists) {
+        throw new Error(`Id ${id} does not exist in database`);
+    }
+}
+
+// Validate workout on the database
+export const validateWorkoutId = async (id: string) => {
+    const workoutExists = await Workout.findById(id);
+    if(!workoutExists) {
         throw new Error(`Id ${id} does not exist in database`);
     }
 }
