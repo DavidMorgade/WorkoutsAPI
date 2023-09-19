@@ -1,12 +1,13 @@
 import {Request, Response} from "express";
-import { Workout } from "../models";
+import { User, Workout } from "../models";
 
 
 export const postWorkout = async (req: Request, res: Response) => {
-    const name = req.body.name.toUpperCase();
+    const workoutName = req.body.workoutName.toUpperCase();
     const {time, mood, comment, shared} = req.body;
-
-    const workout = new Workout({name, time, mood, comment, shared});
+    const user = await User.findById(req.user._id);
+    const name = user?.name;
+    const workout = new Workout({workoutName, time, mood, comment, shared, user});
     
 
     // save user in database
@@ -14,9 +15,11 @@ export const postWorkout = async (req: Request, res: Response) => {
 
     return res.json({
         message: "Post API - Controller",
-        workout,
-        user: req.user._id,
-        muscleGroup: req.body.muscleGroup //TODO
+        workoutName,
+        name,
+        muscleGroup: req.body.muscleGroup,
+        time,
+        comment,
     });
 }
 

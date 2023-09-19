@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 const WorkOutSchema = new Schema({
-    name: {
+    workoutName: {
         type: String,
         required: [true, 'Name is required'],
     },
@@ -12,7 +12,7 @@ const WorkOutSchema = new Schema({
     },
     user: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
     },
     time: {
         type: Number,
@@ -29,7 +29,10 @@ const WorkOutSchema = new Schema({
     shared: {
         type: Boolean,
         default: false,
-        required: true,
+    },
+    date: {
+        type: Date,
+        default: Date.now,
     },
     muscleGroup: {
         type: Schema.Types.ObjectId,
