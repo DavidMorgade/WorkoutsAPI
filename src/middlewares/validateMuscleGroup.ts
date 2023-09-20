@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response } from "express"
 import { requestValidator } from "./validateRoles";
+import { arrayContains} from "../helpers/globalHelpers";
 // import { muscleGroup } from "../types/workoutTypes";
 
-
+// Validate the request muscleGroup
 const validateMuscleGroup = (...muscleGroups : any) => {
     return (req: Request, res: Response, next: NextFunction) => {
         requestValidator(req, res);
-        // TODO TIENE QUE QUE BUSCAR EN ARRAY, INCLUDES NO SIRVE YA QUE COMPARA ARRAY CON ARRAY.
-        const muscleGroupName : string[] = req.muscleGroups;
-        if(!muscleGroups.includes(muscleGroupName)) {
+        const muscleGroupName : string[] = req.body.muscleGroups;
+        if(!arrayContains(muscleGroups, muscleGroupName)) {
             return res.status(401).json({
-                msg: `This muscleGroup can't be added`
+                msg: `This muscleGroup doesn't exists on the database`
             })
         }
 
