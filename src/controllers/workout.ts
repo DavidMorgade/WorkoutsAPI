@@ -1,12 +1,16 @@
 import {Request, Response} from "express";
-import { User, Workout } from "../models";
+import { MuscleGroup, User, Workout } from "../models";
 
 
 export const postWorkout = async (req: Request, res: Response) => {
     const workoutName = req.body.workoutName.toUpperCase();
-    const {time, mood, comment, shared, muscleGroups} = req.body;
+    // GET PARAMETERS FROM THE BODY
+    const {time, mood, comment, shared, muscleGroups: muscleGroupsNames} = req.body;
+    // GET USER ID
     const user = await User.findById(req.user._id);
-    const name = user?.name;
+    // GET MUSCLEGROUP ID (ARRAY OF IDS)
+    const muscleGroups = await MuscleGroup.find({status: true, name: muscleGroupsNames});
+    
     const workout = new Workout({workoutName, muscleGroups, time, mood, comment, shared, user});
     
 
@@ -16,7 +20,6 @@ export const postWorkout = async (req: Request, res: Response) => {
     return res.json({
         message: "Post API - Controller",
         workoutName,
-        name,
         muscleGroups,
         time,
         comment,

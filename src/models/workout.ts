@@ -34,10 +34,10 @@ const WorkOutSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-    muscleGroup: {
+    muscleGroups: [{
         type: Schema.Types.ObjectId,
         ref: "MuscleGroup",
-    }
+    }]
 });
 
 WorkOutSchema.methods.toJSON = function() {

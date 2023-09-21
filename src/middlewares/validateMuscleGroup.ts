@@ -8,7 +8,7 @@ const validateMuscleGroup = (...muscleGroups : any) => {
     return (req: Request, res: Response, next: NextFunction) => {
         requestValidator(req, res);
         const muscleGroupName : string[] = req.body.muscleGroups;
-        if(!arrayContains(muscleGroups, muscleGroupName)) {
+        if(!arrayContains(muscleGroups, muscleGroupName) || muscleGroupName.length === 0) {
             return res.status(401).json({
                 msg: `This muscleGroup doesn't exists on the database`
             })

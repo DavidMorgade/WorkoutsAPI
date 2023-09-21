@@ -6,7 +6,9 @@ export enum MuscleGroup {
     Shoulders = "Shoulders",
     Abs = "Abs",
     Cardio = "Cardio",
-    Rest = "Rest"
+    Rest = "Rest",
+    PECHO = "PECHO",
+    PIERNA = "PIERNA"
 }
 export enum Mood {
     Happy = "Happy",

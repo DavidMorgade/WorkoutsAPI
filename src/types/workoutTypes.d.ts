@@ -11,7 +11,7 @@ export interface WorkoutEntry {
 }
 // Full WorkoutEntry
 export interface MuscleGroupEntry {
-    id: number;
+    _id: number;
     name: string;
     date: string;
     muscleGroup: WorkoutEntry;
