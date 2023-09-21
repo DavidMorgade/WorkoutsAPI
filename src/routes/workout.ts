@@ -1,7 +1,7 @@
 import express from "express";
 
-import { Response } from "express";
-import { deleteWorkout, postWorkout } from "../controllers/workout";
+
+import { deleteWorkout, getSharedWorkouts, getWorkout, postWorkout } from "../controllers/workout";
 import { isAdminRole, validateFields, validateJWT, validateMuscleGroup } from "../middlewares";
 import { check } from "express-validator";
 import { validateWorkoutId } from "../helpers/dbValidators";
@@ -12,12 +12,6 @@ import { MuscleGroup } from "../types/workoutEnums";
 const router = express.Router();
 
 
-// GET ALL WORKOUTS TODO::
-router.get("/", (_, res: Response) => {
-    res.json({
-        msg: "OK GET - WORKOUT"
-    })
-});
 // POST new Workout 
 router.post("/", [
     validateJWT,
@@ -35,6 +29,14 @@ router.delete("/:id", [
     check("id").custom(validateWorkoutId),
     validateFields
 ],deleteWorkout);
+// GET WORKOUT WITH ID
+router.get("/:id", [
+    check("id", "is not a valid id").isMongoId(),
+    check("id").custom(validateWorkoutId),
+    validateFields
+], getWorkout)
+// GET SHARED WORKOUTS
+router.get("/", getSharedWorkouts)
 
 
 export default router;
