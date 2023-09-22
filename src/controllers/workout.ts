@@ -5,13 +5,13 @@ import { MuscleGroup, User, Workout } from "../models";
 export const postWorkout = async (req: Request, res: Response) => {
     const workoutName = req.body.workoutName.toUpperCase();
     // GET PARAMETERS FROM THE BODY
-    const {time, mood, comment, shared, muscleGroups: muscleGroupsNames} = req.body;
+    const {time, mood, comment, shared, muscleGroups: muscleGroupsNames, likes} = req.body;
     // GET USER ID
     const user = await User.findById(req.user._id);
     // GET MUSCLEGROUP ID (ARRAY OF IDS)
     const muscleGroups = await MuscleGroup.find({status: true, name: muscleGroupsNames});
     // CREATE THE WORKOUT
-    const workout = new Workout({workoutName, muscleGroups, time, mood, comment, shared, user});
+    const workout = new Workout({workoutName, muscleGroups, time, mood, comment, shared, user, likes});
     
 
     // save user in database
@@ -97,8 +97,17 @@ export const deleteWorkout = async (req: Request, res: Response) => {
 // PUT CHANGES ON WORKOUT   
 export const putWorkout = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const {_id, status, user, __v, muscleGroups, date, ...rest} = req.body;
+    const {_id, status, user, __v, muscleGroups, date, likes, ...rest} = req.body;
     const workoutUpdated = await Workout.findByIdAndUpdate(id, rest, {new: true});
 
     res.json(workoutUpdated);
+}
+// UPDATE LIKES
+export const putLikesWorkout = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    let {likes, ...rest} = req.body;
+
+    const workoutFound = await Workout.findByIdAndUpdate(id, rest, {new: true, $inc: {quantity: -2}, "likes": 1});
+
+    return res.json(workoutFound);
 }
