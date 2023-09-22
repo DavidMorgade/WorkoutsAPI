@@ -1,7 +1,7 @@
 import express from "express";
 
 
-import { deleteWorkout, getSharedWorkouts, getWorkout, postWorkout } from "../controllers/workout";
+import { deleteWorkout, getSharedWorkouts, getUserWorkouts, getWorkout, postWorkout } from "../controllers/workout";
 import { isAdminRole, validateFields, validateJWT, validateMuscleGroup } from "../middlewares";
 import { check } from "express-validator";
 import { validateWorkoutId } from "../helpers/dbValidators";
@@ -29,14 +29,21 @@ router.delete("/:id", [
     check("id").custom(validateWorkoutId),
     validateFields
 ],deleteWorkout);
+// GET SHARED WORKOUTS
+router.get("/shared", getSharedWorkouts)
+// GET WORKOUTS FORM USER
+router.get("/user", [
+    validateJWT,
+    validateFields
+], getUserWorkouts);
 // GET WORKOUT WITH ID
 router.get("/:id", [
     check("id", "is not a valid id").isMongoId(),
     check("id").custom(validateWorkoutId),
     validateFields
 ], getWorkout)
-// GET SHARED WORKOUTS
-router.get("/", getSharedWorkouts)
+
+
 
 
 export default router;

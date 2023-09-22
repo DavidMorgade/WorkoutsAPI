@@ -32,6 +32,32 @@ export const getWorkout = async (req: Request, res: Response) => {
     const workOut = await Workout.findById(id).populate("user", "name").populate("muscleGroups", "name");
     return res.status(202).json(workOut)
 }
+// get all workouts user:
+export const getUserWorkouts = async (req: Request, res: Response) => {
+    const {limit = 5, from = 0} = req.query;
+    const reqUserId = req.user._id;
+    if(isNaN(+limit) || isNaN(+from)) {
+        return res.status(400).json({
+            message: "Limit and from must be numbers"
+        });
+    }
+    const dbUserId = await User.findById(reqUserId);
+    // Executes both promises at the same time
+    const [total, workouts] = await Promise.all(
+        [
+            Workout
+            .countDocuments()
+            .where({status: true, user: dbUserId}),
+            Workout
+            .find({status: true})
+            .populate("user", "name").populate("muscleGroups", "name")
+        ]);
+
+    return res.json({
+        total,
+        workouts
+    });
+}
 // get all workouts (shared):
 export const getSharedWorkouts = async (req: Request, res: Response) => {
     const {limit = 5, from = 0} = req.query;
