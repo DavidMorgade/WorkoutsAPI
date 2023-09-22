@@ -1,7 +1,7 @@
 import express from "express";
 
 
-import { deleteWorkout, getSharedWorkouts, getUserWorkouts, getWorkout, postWorkout } from "../controllers/workout";
+import { deleteWorkout, getSharedWorkouts, getUserWorkouts, getWorkout, postWorkout, putWorkout } from "../controllers/workout";
 import { isAdminRole, validateFields, validateJWT, validateMuscleGroup } from "../middlewares";
 import { check } from "express-validator";
 import { validateWorkoutId } from "../helpers/dbValidators";
@@ -42,7 +42,13 @@ router.get("/:id", [
     check("id").custom(validateWorkoutId),
     validateFields
 ], getWorkout)
-
+// put workout id
+router.put("/:id", [
+    validateJWT,
+    check("id", "Id is not valid").isMongoId(),
+    check("id").custom( validateWorkoutId ),
+    validateFields
+],  putWorkout);
 
 
 

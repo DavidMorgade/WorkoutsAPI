@@ -94,3 +94,11 @@ export const deleteWorkout = async (req: Request, res: Response) => {
             workout,
         );
 }
+// PUT CHANGES ON WORKOUT   
+export const putWorkout = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const {_id, status, user, __v, muscleGroups, date, ...rest} = req.body;
+    const workoutUpdated = await Workout.findByIdAndUpdate(id, rest, {new: true});
+
+    res.json(workoutUpdated);
+}

@@ -63,6 +63,7 @@ export const deleteUsers = async (req: Request, res: Response) => {
         );
 }
 
+// TODO
 export const patchUsers = (_req: Request, res: Response) => {
     res.json({
         message: "Patch API -  Controller"
